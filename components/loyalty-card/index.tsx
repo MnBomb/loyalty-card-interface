@@ -25,6 +25,8 @@ export default function LoyaltyCard() {
   const [tiles, setTiles] = useState(INITIAL_TILES)
   // Fires exactly once, when the 8th (final) tile transitions locked -> unlocked.
   const [justCompleted, setJustCompleted] = useState(false)
+  // Whether the tavern sign has been swung open via "tap to see the meaning".
+  const [signOpen, setSignOpen] = useState(false)
 
   const unlockedCount = tiles.filter((t) => t.isUnlocked).length
   const allUnlocked = unlockedCount === TILE_COUNT
@@ -65,6 +67,33 @@ export default function LoyaltyCard() {
           </div>
         </div>
       </button>
+
+      {/* Tavern sign: hidden until the meaning is revealed. Connected to the
+          card's bottom edge by a hinge and swings down like a pendulum. */}
+      {allUnlocked && !signOpen && (
+        <button
+          type="button"
+          className={styles.tapMeaning}
+          onClick={() => setSignOpen(true)}
+        >
+          tap to see the meaning
+        </button>
+      )}
+
+      {signOpen && (
+        <div className={styles.signWrap}>
+          <div className={styles.hinge} aria-hidden="true">
+            <span className={styles.rivet} />
+            <span className={styles.rivet} />
+          </div>
+          <div className={styles.signBoard}>
+            <span className={styles.signWord}>tsundoku</span>
+            <span className={styles.signMeaning}>
+              η συνήθεια να αγοράζεις βιβλία χωρίς ποτέ να τα διαβάζεις
+            </span>
+          </div>
+        </div>
+      )}
 
       {isFlipped && (
         <p className={styles.progress} aria-live="polite">

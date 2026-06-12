@@ -248,6 +248,126 @@
   letter-spacing: 0.02em;
 }
 
+/* "tap to see the meaning" prompt — appears after puzzle completion. */
+.tapMeaning {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: 'Georgia', 'Garamond', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: #4a5a56;
+  letter-spacing: 0.02em;
+  padding: 0.25rem 0.5rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.tapMeaning:focus-visible {
+  outline: 2px solid #2c2c2c;
+  outline-offset: 4px;
+}
+
+/* Tavern sign assembly sits directly below the card; the swinging board
+   pivots from the hinge point at the top centre. */
+.signWrap {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -1rem; /* tuck up under the page gap, close to the card edge */
+}
+
+/* Hinge: short dark-wood bar with two rivets. */
+.hinge {
+  position: relative;
+  z-index: 2;
+  width: 40px;
+  height: 10px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #5a4632 0%, #3d2f20 100%);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5px;
+}
+
+.rivet {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #c9b48a;
+  box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.4);
+}
+
+/* Wooden sign board — swings in from the hinge like a pendulum settling. */
+.signBoard {
+  width: 90%;
+  max-width: 420px;
+  margin-top: -2px;
+  padding: 1.25rem 1.5rem;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  transform-origin: top center;
+
+  background-color: #4a3826;
+  background-image: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(0, 0, 0, 0.25) 100%
+    ),
+    url('data:image/svg+xml,%3Csvg width="100" height="100" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="wood"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.04 0.9" numOctaves="3" result="n" /%3E%3C/filter%3E%3Crect width="100" height="100" fill="white" opacity="0.05" filter="url(%23wood)" /%3E%3C/svg%3E');
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 28px rgba(40, 30, 18, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+  animation: signSwing 1.3s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes signSwing {
+  0% {
+    transform: rotate(-35deg);
+  }
+  30% {
+    transform: rotate(12deg);
+  }
+  50% {
+    transform: rotate(-8deg);
+  }
+  70% {
+    transform: rotate(5deg);
+  }
+  85% {
+    transform: rotate(-2deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.signWord {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 900;
+  font-size: clamp(28px, 8vw, 48px);
+  line-height: 1;
+  letter-spacing: -1px;
+  text-transform: lowercase;
+  color: #f0e6d2;
+}
+
+.signMeaning {
+  font-family: 'Georgia', 'Garamond', serif;
+  font-style: italic;
+  font-size: clamp(13px, 3.2vw, 16px);
+  line-height: 1.5;
+  text-align: center;
+  color: #d8cbb0;
+}
+
 /* Accessibility (#12): honour reduced-motion preferences. */
 @media (prefers-reduced-motion: reduce) {
   .cardContainer,
@@ -257,7 +377,8 @@
   }
 
   .shineSweep,
-  .breathing {
+  .breathing,
+  .signBoard {
     animation: none !important;
   }
 }
