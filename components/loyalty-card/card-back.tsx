@@ -10,9 +10,10 @@ interface TileState {
 interface CardBackProps {
   tiles: TileState[]
   allUnlocked: boolean
+  shine?: boolean
 }
 
-export function CardBack({ tiles, allUnlocked }: CardBackProps) {
+export function CardBack({ tiles, allUnlocked, shine = false }: CardBackProps) {
   return (
     <div className={styles.puzzleArea}>
       {/* Single continuous word layer behind the grid */}
@@ -31,6 +32,9 @@ export function CardBack({ tiles, allUnlocked }: CardBackProps) {
           />
         ))}
       </div>
+
+      {/* Diagonal shine sweep — fires once on puzzle completion. */}
+      {shine && <div className={styles.shineSweep} aria-hidden="true" />}
     </div>
   )
 }

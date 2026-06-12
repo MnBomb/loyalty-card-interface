@@ -23,6 +23,8 @@ const gridVars = {
 export default function LoyaltyCard() {
   const [isFlipped, setIsFlipped] = useState(false)
   const [tiles, setTiles] = useState(INITIAL_TILES)
+  // Fires exactly once, when the 8th (final) tile transitions locked -> unlocked.
+  const [justCompleted, setJustCompleted] = useState(false)
 
   const unlockedCount = tiles.filter((t) => t.isUnlocked).length
   const allUnlocked = unlockedCount === TILE_COUNT
@@ -34,13 +36,18 @@ export default function LoyaltyCard() {
     setTiles((prev) =>
       prev.map((t) => (t.id === target.id ? { ...t, isUnlocked: true } : t)),
     )
+    // This unlock empties the locked set => the final tile just completed.
+    if (locked.length === 1) setJustCompleted(true)
   }
 
   return (
     <div className={styles.page} style={gridVars}>
       <button
         type="button"
-        className={styles.cardContainer}
+        className={`${styles.cardContainer} ${justCompleted ? styles.breathing : ''}`}
+        onAnimationEnd={(e) => {
+          if (e.target === e.currentTarget) setJustCompleted(false)
+        }}
         onClick={() => setIsFlipped((v) => !v)}
         aria-pressed={isFlipped}
         aria-label={
@@ -54,7 +61,7 @@ export default function LoyaltyCard() {
             <CardFront />
           </div>
           <div className={`${styles.cardFace} ${styles.cardBack}`}>
-            <CardBack tiles={tiles} allUnlocked={allUnlocked} />
+            <CardBack tiles={tiles} allUnlocked={allUnlocked} shine={justCompleted} />
           </div>
         </div>
       </button>
