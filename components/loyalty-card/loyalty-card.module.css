@@ -135,7 +135,7 @@
   font-weight: 900;
   white-space: nowrap;
   line-height: 1;
-  font-size: clamp(43px, 12.6vw, 101px);
+  font-size: clamp(39px, 11.5vw, 92px);
   letter-spacing: -2px;
   color: #2c2c2c;
   text-transform: lowercase;
