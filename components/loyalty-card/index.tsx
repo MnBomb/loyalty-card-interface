@@ -68,8 +68,9 @@ export default function LoyaltyCard() {
         </div>
       </button>
 
-      {/* Tavern sign: hidden until the meaning is revealed. Connected to the
-          card's bottom edge by a hinge and swings down like a pendulum. */}
+      {/* Tavern sign: hidden until the meaning is revealed. Suspended from the
+          card's bottom edge by two ropes and swings front-to-back like a
+          pendulum. */}
       {allUnlocked && !signOpen && (
         <button
           type="button"
@@ -82,12 +83,14 @@ export default function LoyaltyCard() {
 
       {signOpen && (
         <div className={styles.signWrap}>
-          <div className={styles.hinge} aria-hidden="true">
-            <span className={styles.rivet} />
-            <span className={styles.rivet} />
+          <div className={styles.ropes} aria-hidden="true">
+            <span className={styles.rope} />
+            <span className={styles.rope} />
           </div>
           <div className={styles.signBoard}>
-            <span className={styles.signWord}>tsundoku</span>
+            <span className={styles.signPhrase}>
+              η λέξη <strong className={styles.signWord}>tsundoku</strong> σημαίνει...
+            </span>
             <span className={styles.signMeaning}>
               η συνήθεια να αγοράζεις βιβλία χωρίς ποτέ να τα διαβάζεις
             </span>
